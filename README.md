@@ -20,8 +20,8 @@ like `/wp-content/mu-plugins/index.php`:
 require_once __DIR__ .'/cf7-tac-recaptcha/cf7-tac-recaptcha.php';
 ```
 
-That’s all! The plugin will replace the recaptcha script used by ContactForm7 with the
-corresponding TarteAuCitron calls.
+That’s all! The plugin will replace the reCaptcha script used by [ContactForm7][cf7] with the
+corresponding [TarteAuCitron][tac] calls.
 
 ![](screenshot.png)
 
@@ -32,3 +32,6 @@ I’m interested in any feedback.
 ## Author
 
 Jérôme Mulsant [https://rue-de-la-vieille.fr](https://rue-de-la-vieille.fr)
+
+[tac]: https://github.com/AmauriC/tarteaucitron.js/
+[cf7]: http://contactform7.com/
