@@ -20,6 +20,8 @@ like `/wp-content/mu-plugins/index.php`:
 require_once __DIR__ .'/cf7-tac-recaptcha/cf7-tac-recaptcha.php';
 ```
 
+**Warning:** This plugin assumes that you enqueued the TarteAuCitron script with the handle `tac`.
+
 That’s all! The plugin will replace the reCaptcha script used by [ContactForm7][cf7] with the
 corresponding [TarteAuCitron][tac] calls.
 
