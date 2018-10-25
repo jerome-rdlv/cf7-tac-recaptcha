@@ -20,7 +20,12 @@ like `/wp-content/mu-plugins/index.php`:
 require_once __DIR__ .'/cf7-tac-recaptcha/cf7-tac-recaptcha.php';
 ```
 
-**Warning:** This plugin assumes that you enqueued the TarteAuCitron script with the handle `tac`.
+## Configuration
+
+By default, this plugin assumes that you enqueued the TarteAuCitron script with the handle `tac`
+and use that handle to add its scripts. You can change that handle by using the filter
+`cf7-tac-recpatcha-handle`, keeping in mind that this plugin script must be added *after*
+TarteAuCitron main script.
 
 That’s all! The plugin will replace the reCaptcha script used by [ContactForm7][cf7] with the
 corresponding [TarteAuCitron][tac] calls.

@@ -8,6 +8,8 @@ add_action('wp_footer', function () {
         return;
     }
     
+    $handle = apply_filters('cf7-tac-recpatcha-handle', 'tac');
+    
     // remove recaptcha script
     wp_dequeue_script('google-recaptcha');
 
@@ -30,8 +32,8 @@ add_action('wp_footer', function () {
         tarteaucitron.fallback(["g-recaptcha"], tarteaucitron.engage(id));
     }
 };';
-    wp_add_inline_script('tac', $tacReCaptchaService, 'after');
+    wp_add_inline_script($handle, $tacReCaptchaService, 'after');
 
     // register tac service
-    wp_add_inline_script('tac', '(tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");', 'after');
+    wp_add_inline_script($handle, '(tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");', 'after');
 }, 11);
