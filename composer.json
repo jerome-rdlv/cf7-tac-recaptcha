@@ -1,0 +1,16 @@
+{
+    "name": "cf7-tac-recaptcha",
+    "description": "WordPress plugin to handle ContactForm7 reCaptcha feature with TarteAuCitron",
+    "homepage": "https://github.com/jerome-rdlv/cf7-tac-recpatcha",
+    "type": "wordpress-muplugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name"    : "Jérôme Mulsant",
+            "homepage": "https://rue-de-la-vieille.fr/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    }
+}
