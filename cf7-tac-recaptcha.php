@@ -13,27 +13,6 @@ add_action('wp_footer', function () {
     // remove recaptcha script
     wp_dequeue_script('google-recaptcha');
 
-    // add customized tac service
-    $tacReCaptchaService = 'tarteaucitron.services.recaptchacf7 = {
-    "key": "recaptchacf7",
-    "type": "api",
-    "name": "reCAPTCHA",
-    "uri": "http://www.google.com/policies/privacy/",
-    "needConsent": true,
-    "cookies": ["nid"],
-    "js": function () {
-        "use strict";
-        tarteaucitron.fallback(["g-recaptcha"], "");
-        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit&ver=2.0");
-    },
-    "fallback": function () {
-        "use strict";
-        var id = "recaptchacf7";
-        tarteaucitron.fallback(["g-recaptcha"], tarteaucitron.engage(id));
-    }
-};';
-    wp_add_inline_script($handle, $tacReCaptchaService, 'after');
-
     // register tac service
-    wp_add_inline_script($handle, '(tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");', 'after');
+    wp_add_inline_script($handle, '(tarteaucitron.job = tarteaucitron.job || []).push("recaptcha");', 'after');
 }, 11);
