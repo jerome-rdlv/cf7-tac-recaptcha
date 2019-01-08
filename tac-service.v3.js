@@ -7,12 +7,19 @@ tarteaucitron.services.recaptchacf7 = {
     "cookies": ["nid"],
     "js": function () {
         "use strict";
-        tarteaucitron.fallback(["g-recaptcha"], "");
+        tarteaucitron.fallback(["g-recaptcha"], function (node) {
+            if (node._inner) {
+                node.innerHTML = node._inner;
+            }
+        }, true);
         tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?render={site-key}");
     },
     "fallback": function () {
         "use strict";
         var id = "recaptchacf7";
-        tarteaucitron.fallback(["g-recaptcha"], tarteaucitron.engage(id));
+        tarteaucitron.fallback(["g-recaptcha"], function (node) {
+            node._inner = node.innerHTML;
+            return tarteaucitron.engage(id);
+        });
     }
 };
