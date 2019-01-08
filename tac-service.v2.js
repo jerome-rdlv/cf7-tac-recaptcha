@@ -8,7 +8,7 @@ tarteaucitron.services.recaptchacf7 = {
     "js": function () {
         "use strict";
         tarteaucitron.fallback(["g-recaptcha"], "");
-        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit&ver=2.0");
+        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js");
     },
     "fallback": function () {
         "use strict";
