@@ -12,7 +12,9 @@ tarteaucitron.services.recaptchacf7 = {
                 node.innerHTML = node._inner;
             }
         }, true);
-        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?render={site-key}");
+        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?render={site-key}", '', function () {
+            {bootstrap}
+        });
     },
     "fallback": function () {
         "use strict";

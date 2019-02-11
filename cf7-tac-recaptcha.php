@@ -10,7 +10,16 @@ add_action('wp_footer', function () {
     }
     
     $script = wp_scripts()->query('google-recaptcha');
-
+    
+    $bootstrap = '// reCAPTCHA bootstrap';
+    if (function_exists('wpcf7_recaptcha_onload_script')) {
+        array_push(wp_scripts()->done, 'google-recaptcha');
+        ob_start();
+        wpcf7_recaptcha_onload_script();
+        $bootstrap = preg_replace('/<\/?script[^>]*>/', '', ob_get_clean());
+        array_pop(wp_scripts()->done);
+    }
+    
     switch ($script->ver) {
         case '2.0':
             $service = file_get_contents(__DIR__ .'/tac-service.v2.js');
@@ -18,7 +27,11 @@ add_action('wp_footer', function () {
         case '3.0':
             $service = file_get_contents(__DIR__ .'/tac-service.v3.js');
             $site_key = preg_replace('/^.*(\?|&)render=([^&]+)$/', '\2', $script->src);
-            $service = preg_replace('/{site-key}/', $site_key, $service);
+            $service = str_replace(
+                ['{site-key}', '{bootstrap}'],
+                [$site_key, $bootstrap],
+                $service
+            );
             break;
     }
     
