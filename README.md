@@ -41,6 +41,33 @@ corresponding [TarteAuCitron][tac] calls.
 
 ![](screenshot.png)
 
+## v3 integration
+
+For v3 integration, it is possible to keep the `[recaptcha]` field in forms and replace it with
+a legal notice :
+
+```php
+if (function_exists('wpcf7_remove_form_tag')) {
+    // remove original form tag which is simply deleted when reCAPTCHA v3 is enabled
+    wpcf7_remove_form_tag('recaptcha');
+    // add custom tag with legal notice
+    wpcf7_add_form_tag('recaptcha', function () {
+        return '<div class="g-recaptcha">Ce site est protégé par reCAPTCHA, et les
+<a href="https://policies.google.com/privacy" target="_blank">règles de confidentialité</a> et les
+<a href="https://policies.google.com/terms" target="_blank">conditions d’utilisation</a> de Google s’appliquent.
+</div>';
+    });
+}
+```
+
+This allow to hide the v3 reCAPTCHA badge according to [Google terms](googleterms) :
+
+```css
+.grecaptcha-badge {
+    display: none !important;
+}
+```
+
 ## Support
 
 I’m interested in any feedback.
@@ -51,3 +78,4 @@ Jérôme Mulsant [https://rue-de-la-vieille.fr](https://rue-de-la-vieille.fr)
 
 [tac]: https://github.com/AmauriC/tarteaucitron.js/
 [cf7]: http://contactform7.com/
+[googleterms]: https://developers.google.com/recaptcha/docs/faq#hiding-badge
