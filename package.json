@@ -1,0 +1,7 @@
+{
+    "devDependencies": {
+        "gulp": ">=4.0",
+        "gulp-rename": ">=1.2",
+        "gulp-terser": ">=0.1"
+    }
+}
