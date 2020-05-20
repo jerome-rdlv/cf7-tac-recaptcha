@@ -25,6 +25,12 @@ add_action('wp_footer', function () {
         $bootstrap = preg_replace('/<\/?script[^>]*>/', '', ob_get_clean());
         array_pop(wp_scripts()->done);
 
+        // replace DOMContentLoaded event because already triggered at this point
+        $bootstrap = str_replace('DOMContentLoaded', 'cf7-tac-recaptcha-loaded', $bootstrap);
+        $bootstrap .= 'document.dispatchEvent(new CustomEvent("cf7-tac-recaptcha-loaded"));';
+
+        // todo forget about minification and serve the bundle as file
+        // todo store outside of plugin in a cache directory
         $path = __DIR__ . '/bootstrap.js';
         $minified = __DIR__ . '/bootstrap.min.js';
         $write = true;
@@ -66,6 +72,7 @@ add_action('wp_footer', function () {
         wp_dequeue_script('google-recaptcha');
 
         // register recaptcha service
+        // todo serve as file instead of inline script
         $tac_handle = apply_filters('cf7_tac_recpatcha_tac_handle', 'tac');
         wp_add_inline_script($tac_handle, $service, 'after');
         wp_add_inline_script($tac_handle, '(tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");',
