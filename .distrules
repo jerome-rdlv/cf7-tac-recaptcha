@@ -14,27 +14,11 @@
 
 # Don’t sync and delete if existing on destination
 
-- node_modules
-- .backupignore
-- .backuprules
-- .DS_Store
 - .git
 - .gitignore
-- .nvmrc
-- .yarnrc
 
-- /.gitlab-ci.yml
-- /.idea
-- /.travis.yml
-- /.editorconfig
-- /.circleci
-- /.deploy*
 - /composer.json
 - /composer.lock
-- /package.json
-- /phpunit.xml
-- /phpunit.xml.dist
 - /README.md
 - /screenshot.png
-- /yarn.lock
 
