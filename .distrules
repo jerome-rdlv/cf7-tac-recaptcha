@@ -1,0 +1,40 @@
+# This file is used by rsync to filter deployment sync:
+#
+#   rsync   --compress --recursive --perms --links \
+#           --itemize-changes --chmod=D2775,F664 \
+#           --delete-after --delete-excluded \
+#           --filter=": .distrules" \
+#           . $DEPLOY_TARGET
+#
+# Paths are relative to the .distrules file
+
+# Keep .distrules in sync for resource protection
++ .distrules
+
+
+# Don’t sync and delete if existing on destination
+
+- node_modules
+- .backupignore
+- .backuprules
+- .DS_Store
+- .git
+- .gitignore
+- .nvmrc
+- .yarnrc
+
+- /.gitlab-ci.yml
+- /.idea
+- /.travis.yml
+- /.editorconfig
+- /.circleci
+- /.deploy*
+- /composer.json
+- /composer.lock
+- /package.json
+- /phpunit.xml
+- /phpunit.xml.dist
+- /README.md
+- /screenshot.png
+- /yarn.lock
+

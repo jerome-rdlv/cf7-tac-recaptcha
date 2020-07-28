@@ -12,7 +12,8 @@ tarteaucitron.services.recaptchacf7 = {
                 node.innerHTML = node._inner;
             }
         }, true);
-        tarteaucitron.addScript("https://www.google.com/recaptcha/api.js?render=SITE_KEY", '', function () {
+        var scriptUrl = "https://www.google.com/recaptcha/api.js?render=" + wpcf7_recaptcha.sitekey;
+        tarteaucitron.addScript(scriptUrl, '', function () {
             BOOTSTRAP
         });
     },
