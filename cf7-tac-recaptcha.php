@@ -66,7 +66,6 @@ add_action('wp_footer', function () {
 
     // dequeue google-recaptcha
     wp_dequeue_script('google-recaptcha');
-//    array_push(wp_scripts()->done, 'google-recaptcha');
 
     $script = wp_scripts()->registered['wpcf7-recaptcha'];
     $script->deps = [];
