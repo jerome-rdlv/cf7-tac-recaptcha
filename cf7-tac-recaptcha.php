@@ -13,7 +13,7 @@ add_action('wp_footer', function () {
     if (!array_key_exists($name, $plugins)) {
         return;
     }
-    $version = substr(md5($plugins[$name]['Version']), 0, 8);
+    $version = substr(md5($plugins[$name]['Version'] .'-20200825'), 0, 8);
     
     function getScript($path)
     {
@@ -81,7 +81,7 @@ add_action('wp_footer', function () {
     $script->src = WP_CONTENT_URL . '/' . $service_file;
     wp_add_inline_script(
         'wpcf7-recaptcha',
-        '(tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");',
+        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");',
         'after'
     );
 }, 11);
