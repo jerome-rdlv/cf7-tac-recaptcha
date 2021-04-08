@@ -4,17 +4,25 @@
  */
 
 add_action('wp_footer', function () {
-    if (!wp_script_is('wpcf7-recaptcha', 'enqueued')) {
+    $handle = null;
+    foreach (['wpcf7-recaptcha', 'wpcf7-recaptcha-controls'] as $value) {
+        if (wp_script_is($value, 'enqueued')) {
+            $handle = $value;
+            break;
+        }
+    }
+
+    if (!$handle) {
         return;
     }
-    
+
     $plugins = get_plugins();
     $name = 'contact-form-7/wp-contact-form-7.php';
     if (!array_key_exists($name, $plugins)) {
         return;
     }
-    $version = substr(md5($plugins[$name]['Version'] .'-20200825'), 0, 8);
-    
+    $version = substr(md5($plugins[$name]['Version'] . '-20200825'), 0, 8);
+
     function getScript($path)
     {
         $minified = preg_replace('/\.js$/', '.min.js', $path);
@@ -34,7 +42,7 @@ add_action('wp_footer', function () {
         if (file_exists($service_path)) {
             return;
         }
-        
+
         $bootstrap_path = str_replace(WP_CONTENT_URL, WP_CONTENT_DIR, $bootstrap_src);
         if (!file_exists($bootstrap_path)) {
             return;
@@ -67,8 +75,10 @@ add_action('wp_footer', function () {
     // dequeue google-recaptcha
     wp_dequeue_script('google-recaptcha');
 
-    $script = wp_scripts()->registered['wpcf7-recaptcha'];
-    $script->deps = [];
+    // in case $handle was a dependency of google-recaptcha
+    wp_enqueue_script($handle);
+
+    $script = wp_scripts()->registered[$handle];
 
     $service_file = sprintf('cf7-tac-recaptcha-service-%s.js', $version);
     $service_path = WP_CONTENT_DIR . '/' . $service_file;
@@ -80,7 +90,7 @@ add_action('wp_footer', function () {
     $script->deps[] = $tac_handle;
     $script->src = WP_CONTENT_URL . '/' . $service_file;
     wp_add_inline_script(
-        'wpcf7-recaptcha',
+        $handle,
         'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");',
         'after'
     );
