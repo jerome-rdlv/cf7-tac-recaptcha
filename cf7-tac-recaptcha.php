@@ -21,7 +21,7 @@ add_action('wp_footer', function () {
     if (!array_key_exists($name, $plugins)) {
         return;
     }
-    $version = substr(md5($plugins[$name]['Version'] . '-20200825'), 0, 8);
+    $version = substr(md5($plugins[$name]['Version'] . '-20210414'), 0, 8);
 
     function getScript($path)
     {
@@ -80,6 +80,11 @@ add_action('wp_footer', function () {
 
     $script = wp_scripts()->registered[$handle];
 
+    // drop google-recaptcha dependency
+    if (($recaptcha_index = array_search('google-recaptcha', $script->deps)) !== false) {
+        array_splice($script->deps, $recaptcha_index, 1);
+    }
+
     $service_file = sprintf('cf7-tac-recaptcha-service-%s.js', $version);
     $service_path = WP_CONTENT_DIR . '/' . $service_file;
 
@@ -88,6 +93,7 @@ add_action('wp_footer', function () {
     // register recaptcha service
     $tac_handle = apply_filters('cf7_tac_recpatcha_tac_handle', 'tac');
     $script->deps[] = $tac_handle;
+
     $script->src = WP_CONTENT_URL . '/' . $service_file;
     wp_add_inline_script(
         $handle,
