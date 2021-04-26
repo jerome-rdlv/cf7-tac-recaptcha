@@ -26,6 +26,10 @@
             var id = "recaptchacf7";
             tarteaucitron.fallback(["g-recaptcha"], function (node) {
                 node._inner = node.innerHTML;
+                var engage = node.getAttribute('data-engage');
+                if (engage) {
+                    tarteaucitron.lang['engage-' + id] = engage;
+                }
                 return tarteaucitron.engage(id);
             });
         }
