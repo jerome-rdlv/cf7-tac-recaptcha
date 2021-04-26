@@ -95,9 +95,9 @@ add_action('wp_footer', function () {
     $script->deps[] = $tac_handle;
 
     $script->src = WP_CONTENT_URL . '/' . $service_file;
+    $tac_service = apply_filters('cf7_tac_recpatcha_tac_service', 'recaptchacf7');
     wp_add_inline_script(
         $handle,
-        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("recaptchacf7");',
-        'after'
+        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("' . $tac_service . '");'
     );
 }, 11);
