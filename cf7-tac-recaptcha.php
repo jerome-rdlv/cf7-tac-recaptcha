@@ -68,7 +68,10 @@ add_action('wp_footer', function () {
 
         if ($service) {
             // save service script
-            file_put_contents($service_path, $service);
+            file_put_contents(
+                $service_path,
+                apply_filters('cf7_tac_recaptcha_service', $service)
+            );
         }
     }
 
