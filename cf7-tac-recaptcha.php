@@ -3,7 +3,7 @@
  * Plugin Name: Contact Form 7 reCAPTCHA for RGPD
  */
 
-add_action('wp_footer', function () {
+add_action('wp_enqueue_scripts', function () {
     $handle = null;
     foreach (['wpcf7-recaptcha', 'wpcf7-recaptcha-controls'] as $value) {
         if (wp_script_is($value, 'enqueued')) {
@@ -103,4 +103,4 @@ add_action('wp_footer', function () {
         $handle,
         'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("' . $tac_service . '");'
     );
-}, 11);
+}, 21);
