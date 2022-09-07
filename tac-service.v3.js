@@ -1,9 +1,6 @@
-(function (tarteaucitron) {
-    if (!tarteaucitron) {
-        return;
-    }
-    tarteaucitron.services.recaptchacf7 = {
-        "key": "recaptchacf7",
+window.tarteaucitron && (function (tac) {
+    tac.services.recaptcha_cf7 = {
+        "key": "recaptcha_cf7",
         "type": "api",
         "name": "reCAPTCHA v3",
         "uri": "https://policies.google.com/privacy",
@@ -11,26 +8,24 @@
         "cookies": ["nid"],
         "js": function () {
             "use strict";
-            tarteaucitron.fallback(["g-recaptcha"], function (node) {
-                if (node._inner) {
-                    node.innerHTML = node._inner;
-                }
+            tac.fallback(["g-recaptcha"], function (node) {
+                node._inner && (node.innerHTML = node._inner);
             }, true);
             var scriptUrl = "https://www.google.com/recaptcha/api.js?render=" + wpcf7_recaptcha.sitekey;
-            tarteaucitron.addScript(scriptUrl, '', function () {
+            tac.addScript(scriptUrl, '', function () {
                 BOOTSTRAP;
             });
         },
         "fallback": function () {
             "use strict";
-            var id = "recaptchacf7";
-            tarteaucitron.fallback(["g-recaptcha"], function (node) {
-                node._inner = node.innerHTML;
+            var id = "recaptcha_cf7";
+            tac.fallback(["g-recaptcha"], function (node) {
+                node._inner || (node._inner = node.innerHTML);
                 var engage = node.getAttribute('data-engage');
                 if (engage) {
-                    tarteaucitron.lang['engage-' + id] = engage;
+                    tac.lang['engage-' + id] = engage;
                 }
-                return tarteaucitron.engage(id);
+                return tac.engage(id);
             });
         }
     };
