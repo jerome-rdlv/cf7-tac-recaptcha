@@ -94,7 +94,7 @@ add_action('wp_enqueue_scripts', function () {
     createServiceScript($script->src, $service_path);
 
     // register recaptcha service
-    $tac_handle = apply_filters('cf7_tac_recpatcha_tac_handle', 'tac');
+    $tac_handle = apply_filters('cf7_tac_recaptcha_tac_handle', 'tac');
     $script->deps[] = $tac_handle;
 
     $script->src = WP_CONTENT_URL . '/' . $service_file;
