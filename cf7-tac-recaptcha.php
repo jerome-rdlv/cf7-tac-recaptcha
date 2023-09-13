@@ -16,12 +16,17 @@ add_action('wp_enqueue_scripts', function () {
         return;
     }
 
+    $tac_handle = apply_filters('cf7_tac_recaptcha_tac_handle', 'tac');
+    if (!wp_script_is($tac_handle, 'enqueued')) {
+        return;
+    }
+
     $plugins = get_plugins();
     $name = 'contact-form-7/wp-contact-form-7.php';
     if (!array_key_exists($name, $plugins)) {
         return;
     }
-    $version = substr(md5($plugins[$name]['Version'] . '-20210414'), 0, 8);
+    $version = substr(md5($plugins[$name]['Version'].'-20210414'), 0, 8);
 
     function getScript($path)
     {
@@ -57,11 +62,11 @@ add_action('wp_enqueue_scripts', function () {
         $google_recaptcha_script = wp_scripts()->registered['google-recaptcha'];
         switch ($google_recaptcha_script->ver) {
             case '2.0':
-                $service = file_get_contents(getScript(__DIR__ . '/tac-service.v2.js'));
+                $service = file_get_contents(getScript(__DIR__.'/tac-service.v2.js'));
                 break;
             case '3.0':
             default:
-                $service = file_get_contents(getScript(__DIR__ . '/tac-service.v3.js'));
+                $service = file_get_contents(getScript(__DIR__.'/tac-service.v3.js'));
                 $service = str_replace('BOOTSTRAP', $bootstrap, $service);
                 break;
         }
@@ -89,18 +94,20 @@ add_action('wp_enqueue_scripts', function () {
     }
 
     $service_file = sprintf('cf7-tac-recaptcha-service-%s.js', $version);
-    $service_path = WP_CONTENT_DIR . '/' . $service_file;
+    $service_path = WP_CONTENT_DIR.'/'.$service_file;
 
     createServiceScript($script->src, $service_path);
 
     // register recaptcha service
-    $tac_handle = apply_filters('cf7_tac_recaptcha_tac_handle', 'tac');
     $script->deps[] = $tac_handle;
 
-    $script->src = WP_CONTENT_URL . '/' . $service_file;
+    $script->src = WP_CONTENT_URL.'/'.$service_file;
     $tac_service = apply_filters('cf7_tac_recpatcha_tac_service', 'recaptcha_cf7');
     wp_add_inline_script(
         $handle,
-        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("' . $tac_service . '");'
+        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("'.$tac_service.'");'
     );
+    add_filter('script_loader_tag', function (string $tag, string $handle) use ($script) {
+        return $handle !== $script->handle ? $tag : str_replace(' src', ' defer="defer" src', $tag);
+    }, 10, 2);
 }, 21);
