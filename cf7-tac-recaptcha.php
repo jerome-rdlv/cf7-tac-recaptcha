@@ -102,12 +102,8 @@ add_action('wp_enqueue_scripts', function () {
     $script->deps[] = $tac_handle;
 
     $script->src = WP_CONTENT_URL.'/'.$service_file;
-    $tac_service = apply_filters('cf7_tac_recpatcha_tac_service', 'recaptcha_cf7');
     wp_add_inline_script(
         $handle,
-        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("'.$tac_service.'");'
+        'window.tarteaucitron && (tarteaucitron.job = tarteaucitron.job || []).push("recaptcha_cf7");'
     );
-    add_filter('script_loader_tag', function (string $tag, string $handle) use ($script) {
-        return $handle !== $script->handle ? $tag : str_replace(' src', ' defer="defer" src', $tag);
-    }, 10, 2);
 }, 21);
