@@ -26,12 +26,10 @@ add_action(
                 return;
             }
 
-            $plugins = get_plugins();
-            $name = 'contact-form-7/wp-contact-form-7.php';
-            if (!array_key_exists($name, $plugins)) {
+            if (!defined('WPCF7_VERSION')) {
                 return;
             }
-            $version = substr(md5($plugins[$name]['Version'].'-20210414'), 0, 8);
+            $version = substr(md5(WPCF7_VERSION.'-20210414'), 0, 8);
 
             // dequeue google-recaptcha
             wp_dequeue_script('google-recaptcha');
